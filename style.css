@@ -106,9 +106,27 @@ div:has(> button) {
     background-color: #3B3B3B;
 }
 
+#lower-keys button:hover {
+    background-color: #323232;
+}
+
+#lower-keys button:active {
+    background-color: #2c2627;
+}
+
 .btn.operator,
 .btn.backspace {
     background-color: #323232;
+}
+
+.btn.operator:hover,
+.btn.backspace:hover {
+    background-color: #3B3B3B;
+}
+
+.btn.operator:active,
+.btn.backspace:active {
+    background-color: #36312d;
 }
 
 #upper-keys .btn.backspace,
@@ -122,10 +140,17 @@ div:has(> button) {
     color: #13303F;
 }
 
+.btn.equals:hover {
+    background-color: #48b1e8;
+}
+
+.btn.equals:active {
+    background-color: #43a1d2;
+}
+
 #lower-keys .btn.digit,
 #lower-keys .btn.clear {
     width: calc((100% - 4px) / 3);
-    height: calc((100% - 6px)) / 4;
 }
 
 #main-right-keys .btn.operator,
