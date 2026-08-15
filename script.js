@@ -14,10 +14,14 @@ document.addEventListener('click', (event) => {
 let digit = document.querySelectorAll(".digit");
 let currentOperator = document.querySelectorAll(".operator");
 let display = document.querySelector("#display");
+display.textContent = '0';
 
 digit.forEach(element => {
     element.addEventListener("click", function () {
         if (operator === '') {
+            if (display.textContent === '0') {
+                display.textContent = '';
+            }
             num1 = String(num1) + String(element.textContent);
             display.append(num1);
         } else {
