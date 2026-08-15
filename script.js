@@ -70,6 +70,13 @@ currentOperator.forEach(element => {
 
 equals.addEventListener("click", function () {
     result = operate(operator, +num1, +num2);
+    console.log("length:", String(result).length);
+
+    if (String(result).length >= 18) {
+        result = result.toFixed(16);
+        document.getElementById("display").style.fontSize = "1.95rem";
+    }
+
     display.textContent = '';
     display.append(result);
     console.log('equals:', result);
@@ -78,6 +85,7 @@ equals.addEventListener("click", function () {
         num1 = result;
         num2 = '';
     }
+
     opClickCount = 0;
 });
 
