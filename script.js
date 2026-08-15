@@ -19,6 +19,7 @@ display.textContent = '0';
 
 digit.forEach(element => {
     element.addEventListener("click", function () {
+        document.getElementById("display").style.fontSize = "3.5rem";
         if (operator === '') {
             if (display.textContent === '0') {
                 display.textContent = '';
@@ -31,7 +32,7 @@ digit.forEach(element => {
         }
     });
 });
-// TODO: remove '0' when first digit is clicked
+
 currentOperator.forEach(element => {
     element.addEventListener("click", function () {
         if (!validOperations.includes(lastClicked)) {
@@ -40,6 +41,7 @@ currentOperator.forEach(element => {
         }
     });
 });
+// TODO: if operator pressed 2 or more times, make the solution = num1
 
 equals.addEventListener("click", function () {
     display.textContent = '';
@@ -86,7 +88,12 @@ function operate(operator, num1, num2) {
     } else if (operator === '×') {
         return multiply(num1, num2);
     } else if (operator === '÷') {
-        return divide(num1, num2);
+        if (num2 === 0) {
+            document.getElementById("display").style.fontSize = "1.9rem";
+            return 'Cannot divide by zero';
+        } else {
+            return divide(num1, num2);
+        }
     } else if (operator === '^') {
         return power(num1, num2);
     } else if (operator === '!') {
