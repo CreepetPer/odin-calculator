@@ -8,6 +8,7 @@ let num1 = '';
 let operator = '';
 let num2 = '';
 let result = '';
+let displayStr = '';
 
 const validOperations = ['+', '-', '×', '÷'];
 // track last clicked
@@ -17,6 +18,10 @@ let opClickCount = 0;
 
 digit.forEach(element => {
     element.addEventListener("click", function () {
+        if (String(displayStr).length >= 18 && displayStr !== '') {
+            return;
+        }
+
         document.getElementById("display").style.fontSize = "3.5rem";
         if (operator === '') {
             if (display.textContent === '0') {
@@ -29,6 +34,34 @@ digit.forEach(element => {
             display.append(element.textContent);
         }
         lastClicked = element.textContent;
+
+        displayStr = `${num1 + operator + num2}`;
+        if (String(displayStr).length >= 18) {
+            document.getElementById("display").style.fontSize = "1.925rem";
+            return;
+        }
+        console.log('displayStr:', String(displayStr).length);
+
+        if (String(displayStr).length >= 18) {
+            // displayStr = +(displayStr).toFixed(16);
+            // document.getElementById("display").style.fontSize = "1.925rem";
+        } else if (String(displayStr).length === 10) {
+            document.getElementById("display").style.fontSize = "3.35rem";
+        } else if (String(displayStr).length === 11) {
+            document.getElementById("display").style.fontSize = "3.05rem";
+        } else if (String(displayStr).length === 12) {
+            document.getElementById("display").style.fontSize = "2.75rem";
+        } else if (String(displayStr).length === 13) {
+            document.getElementById("display").style.fontSize = "2.55rem";
+        } else if (String(displayStr).length === 14) {
+            document.getElementById("display").style.fontSize = "2.35rem";
+        } else if (String(displayStr).length === 15) {
+            document.getElementById("display").style.fontSize = "2.22rem";
+        } else if (String(displayStr).length === 16) {
+            document.getElementById("display").style.fontSize = "2.10rem";
+        } else if (String(displayStr).length === 17) {
+            document.getElementById("display").style.fontSize = "1.95rem";
+        }
     });
 });
 // TODO: make AC button functional
@@ -84,6 +117,20 @@ equals.addEventListener("click", function () {
     if (String(result).length >= 18) {
         result = result.toFixed(16);
         document.getElementById("display").style.fontSize = "1.925rem";
+    } else if (String(result).length === 11) {
+        document.getElementById("display").style.fontSize = "3.3rem";
+    } else if (String(result).length === 12) {
+        document.getElementById("display").style.fontSize = "2.75rem";
+    } else if (String(result).length === 13) {
+        document.getElementById("display").style.fontSize = "2.55rem";
+    } else if (String(result).length === 14) {
+        document.getElementById("display").style.fontSize = "2.35rem";
+    } else if (String(result).length === 15) {
+        document.getElementById("display").style.fontSize = "2.35rem";
+    } else if (String(result).length === 16) {
+        document.getElementById("display").style.fontSize = "2.25rem";
+    } else if (String(result).length === 17) {
+        document.getElementById("display").style.fontSize = "2.1rem";
     }
 
     display.textContent = '';
