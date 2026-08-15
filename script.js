@@ -60,15 +60,10 @@ currentOperator.forEach(element => {
             operator = String(element.textContent);
             display.textContent = `${num1 + operator}`;
             lastClicked = element.textContent;
+
         } else if (validOperations.includes(lastClicked)) {
             if (opClickCount < 2) {
                 operator = String(element.textContent);
-            }
-            if (opClickCount >= 2) {
-                result = operate(operator, +num1, +num2);
-                num1 = result;
-                console.log('equals:', result);
-                num2 = '';
             }
             if (result === 'Cannot divide by zero') {
                 display.textContent = 'Cannot divide by zero';
