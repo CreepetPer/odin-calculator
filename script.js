@@ -31,22 +31,36 @@ digit.forEach(element => {
         lastClicked = element.textContent;
     });
 });
-// TODO: be able to change operator while last clicked is operator
 // TODO: make AC button functional
 currentOperator.forEach(element => {
     element.addEventListener("click", function () {
-        // track operator click count
-        if (!validOperations.includes(lastClicked)) {
-            opClickCount++;
-            console.log('opClickCount:', opClickCount);
-
-        }
-
         if (isNaN(num1)) {
             return;
         }
 
         if (!validOperations.includes(lastClicked)) {
+            // track operator click count
+            opClickCount++;
+            console.log('opClickCount:', opClickCount);
+
+            if (opClickCount < 2) {
+                operator = String(element.textContent);
+            }
+            if (opClickCount >= 2) {
+                result = operate(operator, +num1, +num2);
+                num1 = result;
+                console.log('equals:', result);
+                num2 = '';
+            }
+            if (result === 'Cannot divide by zero') {
+                display.textContent = 'Cannot divide by zero';
+                return;
+            }
+
+            operator = String(element.textContent);
+            display.textContent = `${num1 + operator}`;
+            lastClicked = element.textContent;
+        } else if (validOperations.includes(lastClicked)) {
             if (opClickCount < 2) {
                 operator = String(element.textContent);
             }
@@ -74,7 +88,7 @@ equals.addEventListener("click", function () {
 
     if (String(result).length >= 18) {
         result = result.toFixed(16);
-        document.getElementById("display").style.fontSize = "1.95rem";
+        document.getElementById("display").style.fontSize = "1.925rem";
     }
 
     display.textContent = '';
