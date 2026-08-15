@@ -24,10 +24,10 @@ digit.forEach(element => {
                 display.textContent = '';
             }
             num1 = String(num1) + String(element.textContent);
-            display.append(num1);
+            display.append(element.textContent);
         } else {
             num2 = String(num2) + String(element.textContent);
-            display.append(num2);
+            display.append(element.textContent);
         }
     });
 });
