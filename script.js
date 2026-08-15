@@ -13,7 +13,8 @@ document.addEventListener('click', (event) => {
 
 let digit = document.querySelectorAll(".digit");
 let currentOperator = document.querySelectorAll(".operator");
-let display = document.querySelector("#display");
+let display = document.getElementById("display");
+let equals = document.querySelector('.equals');
 display.textContent = '0';
 
 digit.forEach(element => {
@@ -38,6 +39,12 @@ currentOperator.forEach(element => {
             display.append(operator);
         }
     });
+});
+
+equals.addEventListener("click", function () {
+    display.textContent = '';
+    display.append(operate(operator, +num1, +num2));
+    console.log('equals:', operate(operator, +num1, +num2));
 });
 
 // calculator operation functions
@@ -76,9 +83,9 @@ function operate(operator, num1, num2) {
         return add(num1, num2);
     } else if (operator === '-') {
         return subtract(num1, num2);
-    } else if (operator === '*') {
+    } else if (operator === '×') {
         return multiply(num1, num2);
-    } else if (operator === '/') {
+    } else if (operator === '÷') {
         return divide(num1, num2);
     } else if (operator === '^') {
         return power(num1, num2);
@@ -89,9 +96,9 @@ function operate(operator, num1, num2) {
     }
 }
 
-function input() {
+// function input() {
 
-}
+// }
 
 /* 
 (done) 1. when btn is activated, it stores that digit to num1 var
