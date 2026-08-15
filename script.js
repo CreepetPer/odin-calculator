@@ -1,8 +1,15 @@
+let digit = document.querySelectorAll(".digit");
+let currentOperator = document.querySelectorAll(".operator");
+let display = document.getElementById("display");
+let equals = document.querySelector('.equals');
+display.textContent = '0';
+
 let num1 = '';
 let operator = '';
 let num2 = '';
 
 const validOperations = ['+', '-', '×', '÷'];
+// track last clicked
 let lastClicked = null;
 document.addEventListener('click', (event) => {
     if (event.target.tagName === 'BUTTON') {
@@ -11,11 +18,15 @@ document.addEventListener('click', (event) => {
     }
 });
 
-let digit = document.querySelectorAll(".digit");
-let currentOperator = document.querySelectorAll(".operator");
-let display = document.getElementById("display");
-let equals = document.querySelector('.equals');
-display.textContent = '0';
+// track operator click count
+let opClickCount = 0;
+currentOperator.forEach(element => {
+    element.addEventListener('click', (event) => {
+        if (!validOperations.includes(lastClicked)) {
+            opClickCount++;
+        }
+    });
+});
 
 digit.forEach(element => {
     element.addEventListener("click", function () {
@@ -36,17 +47,32 @@ digit.forEach(element => {
 currentOperator.forEach(element => {
     element.addEventListener("click", function () {
         if (!validOperations.includes(lastClicked)) {
-            operator = String(element.textContent);
+            if (opClickCount < 2) {
+                operator = String(element.textContent);
+            }
             display.append(operator);
+            if (opClickCount >= 2) {
+                num1 = operate(operator, +num1, +num2);
+                num2 = '';
+                console.log('equals:', operate(operator, +num1, +num2));
+            }
+
+            operator = String(element.textContent);
+            display.textContent = `${num1 + operator}`;
         }
     });
 });
-// TODO: if operator pressed 2 or more times, make the solution = num1
 
 equals.addEventListener("click", function () {
     display.textContent = '';
     display.append(operate(operator, +num1, +num2));
     console.log('equals:', operate(operator, +num1, +num2));
+
+    if (opClickCount >= 1) {
+        num1 = operate(operator, +num1, +num2);
+        num2 = '';
+    }
+    opClickCount = 0;
 });
 
 // calculator operation functions
@@ -78,7 +104,7 @@ function factorial(value) {
     return result;
 };
 
-const solution = operate(operator, num1, num2);
+// const solution = operate(operator, num1, num2);
 
 function operate(operator, num1, num2) {
     if (operator === '+') {
