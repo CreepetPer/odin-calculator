@@ -41,7 +41,7 @@ digit.forEach(element => {
             }
         }
 
-        if (lastClicked === '=') {
+        if (lastClicked === '=' || display.textContent === 'Cannot divide by zero') {
             document.getElementById("display").style.fontSize = "3.5rem";
             display.textContent = '0';
             num1 = '';
