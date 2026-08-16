@@ -2,6 +2,7 @@ let digit = document.querySelectorAll(".digit");
 let currentOperator = document.querySelectorAll(".operator");
 let display = document.getElementById("display");
 let equals = document.querySelector('.equals');
+let ac = document.querySelector('.clear');
 display.textContent = '0';
 
 let num1 = '';
@@ -15,6 +16,20 @@ const validOperations = ['+', '-', '×', '÷'];
 let lastClicked = null;
 // operator click count
 let opClickCount = 0;
+
+// clear (AC) button
+ac.addEventListener("click", function () {
+    document.getElementById("display").style.fontSize = "3.5rem";
+    display.textContent = '0';
+    num1 = '';
+    operator = '';
+    num2 = '';
+    result = '';
+    displayStr = '';
+    lastClicked = 'AC';
+    opClickCount = 0;
+});
+// TODO: make AC button functional
 
 digit.forEach(element => {
     element.addEventListener("click", function () {
@@ -64,7 +79,7 @@ digit.forEach(element => {
         }
     });
 });
-// TODO: make AC button functional
+
 currentOperator.forEach(element => {
     element.addEventListener("click", function () {
         if (isNaN(num1)) {
