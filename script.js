@@ -32,6 +32,15 @@ ac.addEventListener("click", function () {
 
 digit.forEach(element => {
     element.addEventListener("click", function () {
+        document.getElementById("display").style.fontSize = "3.5rem";
+
+        if (lastClicked === '.') {
+            lastClicked = element.textContent;
+            if (lastClicked === '.') {
+                return;
+            }
+        }
+
         if (lastClicked === '=') {
             document.getElementById("display").style.fontSize = "3.5rem";
             display.textContent = '0';
@@ -47,14 +56,21 @@ digit.forEach(element => {
             return;
         }
 
-        document.getElementById("display").style.fontSize = "3.5rem";
         if (operator === '') {
+            lastClicked = element.textContent;
             if (display.textContent === '0') {
                 display.textContent = '';
+            }
+            if (lastClicked === '.' && String(num1).includes('.')) {
+                return;
             }
             num1 = String(num1) + String(element.textContent);
             display.append(element.textContent);
         } else {
+            lastClicked = element.textContent;
+            if (lastClicked === '.' && String(num2).includes('.')) {
+                return;
+            }
             num2 = String(num2) + String(element.textContent);
             display.append(element.textContent);
         }
@@ -103,8 +119,7 @@ currentOperator.forEach(element => {
 
             if (opClickCount < 2) {
                 operator = String(element.textContent);
-            }
-            if (opClickCount >= 2) {
+            } else if (opClickCount >= 2) {
                 result = operate(operator, +num1, +num2);
                 num1 = result;
                 console.log('equals:', result);
@@ -136,7 +151,7 @@ currentOperator.forEach(element => {
 });
 
 equals.addEventListener("click", function () {
-    if (operator === '') {
+    if (operator === '' && lastClicked !== '.') {
         lastClicked = '=';
         return;
     } else if (num2 === '') {
@@ -210,6 +225,10 @@ function factorial(value) {
 };
 
 function operate(operator, number1, number2) {
+    if (String(num1).endsWith('.') && operator === '') {
+        return String(num1).slice(0, -1);
+    }
+
     if (operator === '+') {
         return add(number1, number2);
     } else if (operator === '-') {
