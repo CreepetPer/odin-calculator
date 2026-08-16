@@ -29,10 +29,20 @@ ac.addEventListener("click", function () {
     lastClicked = 'AC';
     opClickCount = 0;
 });
-// TODO: make AC button functional
 
 digit.forEach(element => {
     element.addEventListener("click", function () {
+        if (lastClicked === '=') {
+            document.getElementById("display").style.fontSize = "3.5rem";
+            display.textContent = '0';
+            num1 = '';
+            operator = '';
+            num2 = '';
+            result = '';
+            displayStr = '';
+            opClickCount = 0;
+        }
+
         if (String(displayStr).length >= 18 && displayStr !== '') {
             return;
         }
@@ -126,11 +136,20 @@ currentOperator.forEach(element => {
 });
 
 equals.addEventListener("click", function () {
+    if (operator === '') {
+        lastClicked = '=';
+        return;
+    } else if (num2 === '') {
+        display.textContent = num1;
+    }
+
     result = operate(operator, +num1, +num2);
     console.log("length:", String(result).length);
 
     if (String(result).length >= 18) {
-        result = result.toFixed(16);
+        if (Number.isFinite(result)) {
+            result = result.toFixed(16);
+        }
         document.getElementById("display").style.fontSize = "1.925rem";
     } else if (String(result).length === 11) {
         document.getElementById("display").style.fontSize = "3.3rem";
@@ -158,6 +177,7 @@ equals.addEventListener("click", function () {
     }
 
     opClickCount = 0;
+    lastClicked = '=';
 });
 
 // calculator operation functions
@@ -189,8 +209,6 @@ function factorial(value) {
     return result;
 };
 
-// const solution = operate(operator, num1, num2);
-
 function operate(operator, number1, number2) {
     if (operator === '+') {
         return add(number1, number2);
@@ -213,17 +231,3 @@ function operate(operator, number1, number2) {
         return "unsupported operator";
     }
 }
-
-// function input() {
-
-// }
-
-/* 
-(done) 1. when btn is activated, it stores that digit to num1 var
-(done) 2. when operator btn is activated, it stores that to operator var
-3. when btn is activated again, it stores that digit to num2 var
-if operator is activated a second time, solution = operate becomes num1
-4. when equal button is activated, operate() takes num1, operator, and num2 as its arguments, and run the function and save value to solution var
-
-5. use dom manipulation to reflect solution's value to the display
-*/
