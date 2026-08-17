@@ -3,6 +3,7 @@ let currentOperator = document.querySelectorAll(".operator");
 let display = document.getElementById("display");
 let equals = document.querySelector('.equals');
 let ac = document.querySelector('.clear');
+let backspace = document.querySelector('.backspace');
 display.textContent = '0';
 
 let num1 = '';
@@ -12,8 +13,12 @@ let result = '';
 let displayStr = '';
 
 const validOperations = ['+', '-', '×', '÷'];
+let displayElements = [];
+
 // track last clicked
 let lastClicked = null;
+// last character deleted by backspace
+let lastBackspaced = null;
 // operator click count
 let opClickCount = 0;
 
@@ -27,7 +32,35 @@ ac.addEventListener("click", function () {
     result = '';
     displayStr = '';
     lastClicked = 'AC';
+    lastBackspaced = null;
     opClickCount = 0;
+});
+//  TODO: fix bug if click equals btn two times in a row
+// backspace button
+backspace.addEventListener("click", function () {
+    lastBackspaced = display.textContent.slice(-1);
+    display.textContent = display.textContent.slice(0, -1);
+    displayElements = String(display.textContent).split(/([\+\-×÷])/);
+
+    num1 = displayElements[0];
+    operator = displayElements[1];
+    num2 = displayElements[2];
+
+    if (num1 === undefined) {
+        num1 = '';
+    }
+    if (operator === undefined) {
+        operator = '';
+        if (/[\+\-×÷]/.test(lastBackspaced)) {
+            opClickCount -= 1;
+            console.log('opClickCount (backspace):', opClickCount);
+        }
+    }
+    if (num2 === undefined) {
+        num2 = '';
+    }
+
+    lastClicked === 'backspace';
 });
 
 digit.forEach(element => {
@@ -84,8 +117,8 @@ digit.forEach(element => {
         console.log('displayStr:', String(displayStr).length);
 
         if (String(displayStr).length >= 18) {
-            // displayStr = +(displayStr).toFixed(16);
-            // document.getElementById("display").style.fontSize = "1.925rem";
+            displayStr = +(displayStr).toFixed(16);
+            document.getElementById("display").style.fontSize = "1.925rem";
         } else if (String(displayStr).length === 10) {
             document.getElementById("display").style.fontSize = "3.35rem";
         } else if (String(displayStr).length === 11) {
@@ -117,14 +150,18 @@ currentOperator.forEach(element => {
             opClickCount++;
             console.log('opClickCount:', opClickCount);
 
-            if (opClickCount < 2) {
+            if (opClickCount < 2 && lastClicked !== 'backspace') {
                 operator = String(element.textContent);
             } else if (opClickCount >= 2) {
+                if (operator === '') {
+                    operator = String(element.textContent);
+                }
                 result = operate(operator, +num1, +num2);
                 num1 = result;
                 console.log('equals:', result);
                 num2 = '';
             }
+
             if (result === 'Cannot divide by zero') {
                 display.textContent = 'Cannot divide by zero';
                 return;
