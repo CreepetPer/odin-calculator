@@ -194,6 +194,12 @@ equals.addEventListener("click", function () {
     if ((operator === '' && lastClicked !== '.') || lastClicked === '=') {
         lastClicked = '=';
         return;
+    } else if (/[\+\-×÷]$/.test(display.textContent)) {
+        display.textContent = String(display.textContent).slice(0, -1);
+        operator = '';
+        opClickCount -= 1;
+        console.log('opClickCount (last string is an operator): ', opClickCount);
+        return;
     } else if (num2 === '') {
         display.textContent = num1;
     }
