@@ -30,6 +30,19 @@ let lastBackspaced = null;
 // operator click count
 let opClickCount = 0;
 
+// keyboard mappings
+document.addEventListener("keydown", e => {
+    let keyPressed = keyMap[e.key] || e.key;
+    console.log('key pressed: ', keyPressed);
+
+    let targetButton = Array.from(buttons).find(button => button.textContent.trim() === keyPressed);
+    if (targetButton) {
+        targetButton.click();
+    } else {
+        return;
+    }
+});
+
 // clear (AC) button
 ac.addEventListener("click", function () {
     document.getElementById("display").style.fontSize = "3.5rem";
@@ -68,20 +81,7 @@ backspace.addEventListener("click", function () {
         num2 = '';
     }
 
-    lastClicked === 'backspace';
-});
-
-// keyboard mappings
-document.addEventListener("keydown", e => {
-    let keyPressed = keyMap[e.key] || e.key;
-    console.log('key pressed: ', keyPressed);
-
-    let targetButton = Array.from(buttons).find(button => button.textContent.trim() === keyPressed);
-    if (targetButton) {
-        targetButton.click();
-    } else {
-        return;
-    }
+    lastClicked = 'backspace';
 });
 
 digit.forEach(element => {
