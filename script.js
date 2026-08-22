@@ -1,3 +1,4 @@
+let buttons = document.querySelectorAll(".btn");
 let digit = document.querySelectorAll(".digit");
 let currentOperator = document.querySelectorAll(".operator");
 let display = document.getElementById("display");
@@ -13,6 +14,12 @@ let result = '';
 let displayStr = '';
 
 const validOperations = ['+', '-', '×', '÷'];
+const keyMap = {
+    '*': '×',
+    '/': '÷',
+    'Backspace': 'backspace',
+    'Enter': '=',
+};
 let displayElements = [];
 
 // track last clicked
@@ -64,7 +71,11 @@ backspace.addEventListener("click", function () {
 });
 
 // keyboard mappings
-// TODO: keyboard support
+document.addEventListener("keydown", e => {
+    let keyPressed = keyMap[e.key] || e.key;
+
+    console.log('key pressed: ', keyPressed);
+});
 
 digit.forEach(element => {
     element.addEventListener("click", function () {
