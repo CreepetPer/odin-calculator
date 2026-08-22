@@ -35,7 +35,7 @@ ac.addEventListener("click", function () {
     lastBackspaced = null;
     opClickCount = 0;
 });
-//  TODO: fix bug if click equals btn two times in a row
+
 // backspace button
 backspace.addEventListener("click", function () {
     lastBackspaced = display.textContent.slice(-1);
@@ -62,6 +62,9 @@ backspace.addEventListener("click", function () {
 
     lastClicked === 'backspace';
 });
+
+// keyboard mappings
+// TODO: keyboard support
 
 digit.forEach(element => {
     element.addEventListener("click", function () {
@@ -188,7 +191,7 @@ currentOperator.forEach(element => {
 });
 
 equals.addEventListener("click", function () {
-    if (operator === '' && lastClicked !== '.') {
+    if ((operator === '' && lastClicked !== '.') || lastClicked === '=') {
         lastClicked = '=';
         return;
     } else if (num2 === '') {
