@@ -18,6 +18,7 @@ const keyMap = {
     '*': '×',
     '/': '÷',
     'Backspace': 'backspace',
+    'Escape': 'AC',
     'Enter': '=',
 };
 let displayElements = [];
@@ -73,8 +74,14 @@ backspace.addEventListener("click", function () {
 // keyboard mappings
 document.addEventListener("keydown", e => {
     let keyPressed = keyMap[e.key] || e.key;
-
     console.log('key pressed: ', keyPressed);
+
+    let targetButton = Array.from(buttons).find(button => button.textContent.trim() === keyPressed);
+    if (targetButton) {
+        targetButton.click();
+    } else {
+        return;
+    }
 });
 
 digit.forEach(element => {
